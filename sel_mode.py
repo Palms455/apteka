@@ -154,6 +154,3 @@ class Bot:
 			writer.writerow(pharm)
 
 
-if __name__ == '__main__':
-	p = Bot('https://cenyvaptekah.ru/samara/amoxicillin_tabletki_250_mg_20_sht_')
-	print('done')

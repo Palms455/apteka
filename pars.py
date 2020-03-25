@@ -7,50 +7,11 @@ from random import choice
 from multiprocessing import Pool
 from sel_mode import Bot
 
-def get_proxy():
-	html = requests.get('https://free-proxy-list.net/').text
-	proxies = []
-	soup = BeautifulSoup(html, 'lxml')
-	trs = soup.find('table', id= 'proxylisttable').find('tbody').find_all('tr')[:12]
-	for tr in trs:
-		tds = tr.find_all('td')
-		adress = tds[0].text.strip()
-		port = tds[1].text.strip()
-		schema = 'https' if 'yes' in tds[6].text.strip() else 'http'
-		proxy = {'schema': schema, 'adress': adress + ':' + port}
-		proxies.append(proxy)
-	return choice(proxies)
-
-def get_proxy_html(url):
-	#proxies = {'https': 'ipaddress: 5000'}
-	print('getting proxy')
-	p = get_proxy() #{'schema': '' , 'adress': ''}
-	proxy = {p['schema']: p['adress'],
-			p['schema']: p['adress'],
-			p['schema']: p['adress'],
-			p['schema']: p['adress'],
-			p['schema']: p['adress'],} # можно указать несколько прокси
-	print('proxy')
-	try:
-		r = requests.get(url, proxies=proxy, timeout=5 )
-		print(r.status_code)
-	except:
-		print('bad request. retrying')
-		return get_proxy_html(url)
-	
-	return r.text
 
 def pool_offers(link_set):
 	with Pool(4) as p:
 		result = p.map(Bot, link_set)
-	print(result)
-
-
-def make_offers(url):
-	html = get_proxy_html(url)
-	return offers(html)
-
-
+	return
 
 
 if __name__ == '__main__':
