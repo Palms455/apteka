@@ -6,6 +6,9 @@ from bs4 import BeautifulSoup
 import json
 from multiprocessing import Pool
 from ip_read import get_proxy_ip
+import os 
+import signal
+
 
 
 def read_csv(file):
@@ -18,10 +21,10 @@ def read_csv(file):
 			listr.append(item['basket_onclick'])
 		chunks = [listr[x:x+15] for x in range(0, len(listr), 5)]
 		#for it in chunks:
-		selenium_mode(chunks[0])
-		#with Pool(2) as p:
-		#	result = p.map(selenium_mode, chunks)
-		#return
+		#selenium_mode(chunks[0])
+		with Pool(4) as p:
+			result = p.map(selenium_mode, chunks)
+		return
 		
 
 def selenium_mode(orders):
@@ -48,6 +51,9 @@ def selenium_mode(orders):
 		if request.path == 'https://cenyvaptekah.ru/basket/add':
 			cookie = {'cookie': request.headers['cookie']}
 	get_basket(cookie)
+	driver.close()
+	driver.quit()
+	#driver.dispose()
 	#driver.refresh()
 	#request = driver.wait_for_request('https://cenyvaptekah.ru/city/ufa/pharm/basket/index_data', timeout=30)
 	#for request in driver.requests:
