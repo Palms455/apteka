@@ -4,6 +4,9 @@ __pycache__/
 *$py.class
 2.0/
 # C extensions
+ip_selenium.txt
+ip_request.txt
+login_pass.py
 *.so
 apteka_env/
 # Distribution / packaging
